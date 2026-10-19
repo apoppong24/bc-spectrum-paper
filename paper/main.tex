@@ -48,8 +48,9 @@ Without any $\Bc$ input the predictions for $\Bc(1S)$, $\Bcs(1S)$ and $\Bc(2S)$ 
 The $\cc+\bb$ data strongly favour a nearly logarithmic potential ($\alpha\lesssim0.1$).
 The difference of hyperfine splittings $\Delta_{1S}-\Delta_{2S}$, which CMS and LHCb measure at $29$--$31\MeV$, is predicted at $28$--$40\MeV$ and independently selects $\alpha\simeq0.1$--$0.2$.
 With a fixed $\alpha_s$ the absolute $1S$ hyperfine splitting comes out at $76$--$82\MeV$, well above the $64.5\pm1.7\MeV$ recently measured by ATLAS; a one-loop running coupling with $\Lambda$ determined by $\cc+\bb$ alone predicts $\Delta_{1S}=63$--$72\MeV$ and $\Delta_{2S}=34$--$38\MeV$, reproducing the ATLAS, CMS and LHCb hyperfine measurements simultaneously without any $\Bc$ input.
+A full uncertainty budget (fit, data-set, scale and model dependence) gives $\pm20$--$35\MeV$ on the excited levels and $\pm15\MeV$ on the hyperfine splittings; a self-consistent smeared contact term with a mass-independent range is shown to be excluded by the $\bb$ hyperfine splitting.
 The spin-averaged $\Bc(2S)$ is predicted $11$--$24\MeV$ above the measured value in every variant.
-We also give $E1$ and $M1$ radiative widths for the lowest excited $\Bc$ states.
+We give masses, photon energies, $E1$ widths and radiative branching fractions for the $1P$, $2S$, $1D$ and $2P$ states as a guide to their observation, together with decay constants and explicit criteria that would falsify the description.
 \end{quote}
 \vspace{6pt}
 \end{@twocolumnfalse}
@@ -190,7 +191,10 @@ Parameter uncertainties are taken from the covariance of the fit and later propa
 The results are in Table~\ref{tab:params} and Fig.~\ref{fig:residuals}.
 Residuals are typically $10$--$30\MeV$ and are largest for the charmonium $D$ waves (all families miss $\psi_3(3842)$ by $\sim40\MeV$), which lie at the $D\bar D$ threshold where coupled-channel effects are expected.
 Compared with the 1994 parameters~\cite{Eichten1994}, the logarithmic and Martin families change little except for $\alpha_s$, which rises from $0.37$--$0.43$ to $0.45$--$0.46$; the Cornell quark masses, by contrast, drop by $0.4$--$0.5\GeV$, confirming that the original Cornell masses were tuned to a different mass convention.
-The running coupling improves the fit in both families it was applied to ($\chi^2$: $85\to70$ for Martin, $74\to59$ for logarithmic) because it allows the $\cc$ and $\bb$ hyperfine splittings, $113$ and $62\MeV$, to be reproduced simultaneously; the fitted $\Lambda=0.33$--$0.43\GeV$ corresponds to $\alpha_s(m_c)\simeq0.50$ and $\alpha_s(m_b)\simeq0.28$--$0.30$.
+The running coupling improves the fit in both families it was applied to ($\chi^2$: $85\to70$ for Martin, $74\to59$ for logarithmic); the fitted $\Lambda=0.33$--$0.43\GeV$ corresponds to $\alpha_s(m_c)\simeq0.50$ and $\alpha_s(m_b)\simeq0.28$--$0.30$.
+The improvement comes mainly from the $P$-wave fine structure, which is sensitive to $\alpha_s$ through $\tilde T_2$ and $\tilde T_4$.
+Neither treatment reproduces both $1S$ hyperfine splittings within the theory floor: the fixed-$\alpha_s$ Martin fit gives $129$ and $68\MeV$ for $\cc$ and $\bb$ (measured $113$ and $62$), the running-coupling fit $139$ and $44\MeV$.
+The first-order contact term, evaluated with the unperturbed wave function, is the least reliable part of the model, and we examine it further in Sec.~\ref{sec:hyperfine}.
 
 For the Martin family the parameters $B$, $m_c$ and $m_b$ carry large formal errors because $B(r^\alpha-1)\simeq B\alpha\ln r$ for small $\alpha$, so $B$ and the masses are nearly degenerate.
 The combination $m_c+m_b$ that enters $\Bc$ is nevertheless well constrained, and the propagated uncertainties on predicted masses are $\lesssim15\MeV$.
@@ -310,9 +314,72 @@ Combined with the CMS difference this fixes $\Delta_{2S}=35.4\pm2.4\MeV$, so the
 Figure~\ref{fig:hypabs} and Table~\ref{tab:hyp} compare them with the predictions.
 With fixed $\alpha_s$ all three families give $\Delta_{1S}=76$--$82\MeV$ and $\Delta_{2S}=42$--$53\MeV$, $10$--$20\MeV$ too high, even though each reproduces the $\cc$ and $\bb$ $1S$ splittings to $\lesssim20\MeV$: a single coupling cannot interpolate the contact term $\propto\alpha_s|R(0)|^2/m_1m_2$ between flavours.
 With the one-loop running coupling the Martin family gives $\Delta_{1S}=63$--$67\MeV$, $\Delta_{2S}=35$--$38\MeV$ and $M(\Bcs)=6331$--$6332\MeV$, and the logarithmic family $\Delta_{1S}=67$--$72\MeV$, $\Delta_{2S}=34$--$37\MeV$---both within or close to the ATLAS and CMS uncertainties.
-We stress that $\Lambda$ in these fits is determined by the $\cc$ and $\bb$ hyperfine splittings alone, and that neither a fixed coupling nor any adjustment of the spin-independent potential can reproduce the measured values.
-A one-parameter running coupling fitted to equal-mass quarkonia therefore predicts the unequal-mass hyperfine sector of $\Bc$---the absolute $1S$ splitting, the $2S$ splitting and their difference---without $\Bc$ input.
+We stress that $\Lambda$ in these fits is determined by the $\cc$ and $\bb$ data alone, and that neither a fixed coupling nor any adjustment of the spin-independent potential reproduces the measured $\Bc$ values.
+The agreement should nevertheless be read with the $\cc$ and $\bb$ residuals of Sec.~\ref{sec:fit} in mind: the running-coupling fit over-predicts the $\cc$ $1S$ splitting by $26\MeV$ and under-predicts the $\bb$ one by $17\MeV$, and $\Bc$ lies between the two.
+What the result establishes is that the \emph{interpolation} of the contact term to the intermediate reduced mass is accurate to a few MeV once the coupling runs, even though the endpoints are reproduced only at the $2\sigma$ level; with the uncertainty budget of Sec.~\ref{sec:budget} the prediction is $\Delta_{1S}=63\pm15\MeV$ and $\Delta_{2S}=35\pm14\MeV$.
 The same fits place the lattice value~\cite{HPQCD2010} at the low edge of the allowed range; an updated lattice determination of $m(\Bcs)$ with current precision would be valuable.
+
+\subsection{A self-consistent contact term}
+\label{sec:sc}
+
+\begin{table}[t]
+\caption{Fits with the hyperfine interaction included in the Hamiltonian as a Gaussian-smeared contact term of width $\sigma$ (GeV; $\sigma=1$ unless stated), solved self-consistently for the $S$ waves. Columns: $\chi^2$/dof, fitted $m_c$ (GeV), fitted $\cc$ and $\bb$ $1S$ splittings (measured $113$ and $62\MeV$), and the resulting $\Bc$ $\Delta_{1S}$, $\Delta_{2S}$ (MeV; ATLAS/CMS: $64.5\pm1.7$, $35.4\pm2.4$).}
+\label{tab:sc}
+\centering\small
+\begin{tabular}{lcccccc}
+\toprule
+Fit & $\chi^2$/dof & $m_c$ & $\cc$ & $\bb$ & $\Delta_{1S}$ & $\Delta_{2S}$ \\
+\midrule
+\input{tables/selfconsistent}
+\end{tabular}
+\end{table}
+
+Modern potential models usually include the spin--spin interaction in the Hamiltonian, regularised by a Gaussian of range $1/\sigma$, and solve for the singlet and triplet wave functions separately~\cite{BGS2005}; the first-order treatment above could in principle differ from this by tens of MeV.
+We have therefore repeated the fits with $V\to V+\langle\mathbf s_1\!\cdot\!\mathbf s_2\rangle\,\frac{32\pi\alpha_s}{9m_1m_2}\,\delta_\sigma(r)$, $\delta_\sigma(r)=(\sigma/\sqrt\pi)^3e^{-\sigma^2r^2}$, for $\sigma=0.8$, $1.0$ and $1.2\GeV$, refitting $\alpha_s$ or $\Lambda$ (Table~\ref{tab:sc}).
+The outcome is unambiguous: with a mass-independent $\sigma\simeq1\GeV$ the smeared term can reproduce the $\cc$ splitting but reduces the $\bb$ splitting to $7$--$18\MeV$, because the compact $\bb$ wave function is averaged away over the smearing range, and the fit compensates by pushing $m_c$ to $1.0$--$1.25\GeV$.
+The $\chi^2$ is worse than in the first-order fits in every case, and the predicted $\Bc$ splittings ($21$--$37\MeV$) fall far below the ATLAS measurement.
+A smearing range that scales with the quark masses, as in the relativised model of Godfrey and Isgur, would be needed to cure this; we have not pursued it, since the first-order treatment already describes the data, but we note that the self-consistent and first-order treatments are not interchangeable at the present level of precision, and that the $\bb$ hyperfine splitting is the observable that discriminates between them.
+
+% ===========================================================================
+\section{Uncertainty budget and relativistic corrections}
+\label{sec:budget}
+
+\begin{table*}[t]
+\caption{Uncertainty budget (MeV) for the $\Bc$ predictions of the running-coupling Martin fit. Sources: theory floor ($5$ and $20\MeV$ instead of $10$; half range), data set (dropping the $\cc$ $D$ waves or the $\bb$ $3P$ levels; largest shift), $\alpha_s$ scale ($\sqrt{m_cm_b}$ vs.\ $2\mu$), model (half range over the running-coupling Martin and logarithmic fits), and the propagated fit covariance. The total is the quadrature sum.}
+\label{tab:budget}
+\centering\small
+\begin{tabular}{lccccccc}
+\toprule
+State & central & \input{tables/budget_header}& total \\
+\midrule
+\input{tables/budget}
+\end{tabular}
+\end{table*}
+
+Table~\ref{tab:budget} gives the uncertainty budget.
+The dominant entry is the dependence on which levels enter the fit: removing the four charmonium $D$-wave states, which lie at the $D\bar D$ threshold and are the worst-described levels, or the two $\bb$ $3P$ states, moves the $\Bc$ predictions by $10$--$25\MeV$.
+The theory floor, the $\alpha_s$ scale choice and the spread between the two running-coupling families are all small by comparison, and the propagated parameter covariance contributes $8$--$15\MeV$.
+The totals are $\pm25\MeV$ on the ground state, $\pm20\MeV$ on the $2S$ doublet, $\pm20$--$35\MeV$ on the $1P$ and $1D$ levels and $\pm15\MeV$ on the hyperfine splittings; the latter are limited by the parameter covariance, i.e.\ by the precision with which the $\cc$ and $\bb$ data fix $\Lambda$.
+
+The size of the neglected relativistic corrections is indicated by $\langle v^2\rangle=\langle p^2\rangle/m^2$ for each quark, which we obtain from the solved wave functions through $\langle p^2\rangle/2\mu=E-\langle V_{\rm eff}\rangle$.
+For the $1S$ states $\langle v_c^2\rangle=0.20$ in charmonium, $\langle v_b^2\rangle=0.07$ in bottomonium, and in $\Bc$ $\langle v_c^2\rangle=0.29$, $\langle v_b^2\rangle=0.035$; the $P$ and $D$ waves are less relativistic ($0.12$ and $0.08$ for the charm quark in $\Bc$), the $2S$ and $3S$ slightly more ($0.31$, $0.32$).
+The charm quark in $\Bc$ is thus \emph{more} relativistic than in charmonium, because the heavy $b$ antiquark pulls the wave function inwards.
+Relativistic corrections of order $\langle v^2\rangle$ to the kinetic energy are largely absorbed into the fitted potential and quark masses, as they are for $\cc$; the residual effect on $\Bc$ is a difference of order $(\langle v_c^2\rangle_{\Bc}-\langle v_c^2\rangle_{\cc})\times$ (a few hundred MeV), i.e.\ $10$--$30\MeV$, which is consistent with the size of the $\Bc(2S)$ discrepancy and with the $\pm25\MeV$ budget.
+
+\begin{table}[t]
+\caption{Pseudoscalar decay constants (MeV) from the running-coupling Martin fit, $f^2=3|R(0)|^2C/\pi M$ with the one-loop correction $C=1-\frac{\alpha_s}{\pi}\big[2-\frac{m_1-m_2}{m_1+m_2}\ln\frac{m_1}{m_2}\big]$, compared with lattice QCD~\cite{HPQCDfBc,HPQCDfeta}.}
+\label{tab:f}
+\centering\small
+\begin{tabular}{lcc}
+\toprule
+Meson & this work & lattice \\
+\midrule
+\input{tables/decay_constants}
+\end{tabular}
+\end{table}
+
+The same $|R(0)|^2$ that drives the hyperfine splitting determines the leptonic decay constants (Table~\ref{tab:f}).
+They agree with lattice QCD to $10$--$15\%$ with the characteristic pattern of potential models---too large for $\cc$ and $\Bc$, too small for $\bb$---which is the same pattern seen in the $1S$ hyperfine residuals of Sec.~\ref{sec:fit} and confirms that it originates in $|R(0)|^2$ rather than in the spin-dependent formalism.
 
 % ===========================================================================
 \section{Radiative transitions}
@@ -337,6 +404,48 @@ The $M1$ rates are $\lesssim0.1\,$keV; the $\Bcs(1S)\to\Bc\gamma$ photon ($k\sim
 We have not included the model dependence of these widths, which is dominated by the photon energy ($\propto k^3$) and is therefore largest for transitions involving the excited levels of Sec.~\ref{sec:bc}.
 
 % ===========================================================================
+\section{Predictions for experiment}
+\label{sec:predictions}
+
+\begin{table*}[t]
+\caption{Excited $\Bc$ states from the running-coupling Martin fit: mass with total uncertainty from Table~\ref{tab:budget} (MeV), $\langle v_c^2\rangle$, and the dominant radiative lines as (final state, $E_\gamma$ in MeV, $\Gamma$ in keV, radiative branching fraction). Hadronic transitions are not included, so the branching fractions of the $2S$ and $3S$ states, which decay mainly through $\pi\pi$ emission, are of the radiative width only. Our $1P$, $1D$, $2P$ are the $2P$, $3D$, $3P$ of principal-quantum-number labelling.}
+\label{tab:pred}
+\centering\small
+\begin{tabular}{llcl}
+\toprule
+State & Mass & $\langle v_c^2\rangle$ & Radiative lines (final, $E_\gamma$, $\Gamma$, BR) \\
+\midrule
+\input{tables/predictions}
+\end{tabular}
+\end{table*}
+
+Table~\ref{tab:pred} collects the predictions in the form most useful for a search.
+Several features are robust across all our fits and are worth stating explicitly.
+
+\paragraph{The $1P$ multiplet.}
+Four states between $6699$ and $6760\MeV$, all below the $BD$ threshold and therefore narrow, decaying radiatively to the $1S$ doublet with photons of $360$--$460\MeV$.
+The two $J^P=1^+$ states are separable by their final state: the lighter, $1^+$, is $85\%$ $^3P_1$ and decays to $\Bcs\gamma$ ($391\MeV$ photon, $88\%$); the heavier, $1^{+\prime}$, is $85\%$ $^1P_1$ and decays to $\Bc\gamma$ ($461\MeV$, $94\%$).
+Since the $\Bcs\to\Bc\gamma$ photon is only $64\MeV$ and is rarely reconstructed, the $1^+$, $^3P_0$ and $^3P_2$ will appear as peaks in $\Bc\gamma$ at masses shifted down by $64\MeV$, exactly as the $\Bcs(2S)$ does; the $1^{+\prime}$ will appear at its true mass.
+The predicted ${}^3P_2-{}^3P_0$ splitting is $46$--$82\MeV$ over the fitted families.
+
+\paragraph{The $2S$ doublet.}
+$\Bc(2S)=6884\pm19\MeV$ and $\Bcs(2S)=6919\pm17\MeV$, a splitting of $35\pm14\MeV$.
+The measured $\Bc(2S)$ is $13\MeV$ below our central value, at the edge of the budget; a measurement of the $\Bcs(2S)$ mass through the reconstructed $\Bcs(1S)$ photon, now feasible after Ref.~\cite{ATLAS2026}, would test $\Delta_{2S}$ directly.
+
+\paragraph{The $1D$ multiplet.}
+Four states within $15\MeV$ of each other at $7020$--$7035\MeV$, well below the $BD$ threshold ($\approx7145\MeV$) and therefore also narrow.
+They cascade to the ground state through the $1P$ levels with two or three photons of total energy $730$--$750\MeV$; the $^3D_3\to{}^3P_2\gamma$ ($261\MeV$) and $^3D_1\to{}^3P_0\gamma$ ($319\MeV$) lines are the cleanest.
+The spin splitting of the $1D$ multiplet is predicted to be only a few MeV, so a single unresolved peak near $7030\MeV$ with a $\sim260$--$320\MeV$ photon is the expected signature.
+
+\paragraph{Falsifiable statements.}
+The following observations would be incompatible with every potential fitted to $\cc+\bb$ in this work:
+(i) a $1P$ centroid outside $6745$--$6768\MeV$, or any $\Bc$ excited state below $6690\MeV$;
+(ii) a $\Bcs(2S)-\Bc(2S)$ splitting outside $30$--$40\MeV$ (the present ATLAS$+$CMS value is $35.4\pm2.4$);
+(iii) a $1D$ centroid more than $30\MeV$ from $7035\MeV$, or a $^3D_1$ heavier than the $^3D_3$;
+(iv) a $3\,^3S_1$ outside $7250$--$7340\MeV$.
+Conversely, a measured $1P$ centroid determines the confining power $\alpha$ of Eq.~(\ref{eq:power}) to $\pm0.05$ through Fig.~\ref{fig:band}, independently of the spectrum fit.
+
+% ===========================================================================
 \section{Conclusions}
 \label{sec:conclusions}
 
@@ -344,8 +453,10 @@ Fitting three families of potentials to the 2026 charmonium and bottomonium spec
 \begin{enumerate}
 \item The $\cc+\bb$ data prefer a nearly logarithmic confining potential, $\alpha\lesssim0.1$, and the $S$-wave $\Bc$ levels are determined to $\pm15\MeV$ independently of the potential; the $P$, $D$ and $3S$ levels are not, and are the states to measure.
 \item The hyperfine difference $\Delta_{1S}-\Delta_{2S}$ measured by CMS and LHCb is predicted correctly from $\cc+\bb$ and independently selects $\alpha\simeq0.1$--$0.2$.
-\item A fixed $\alpha_s$ overpredicts the $\Bcs(1S)$ hyperfine splitting measured by ATLAS by $10$--$20\MeV$; a one-loop running coupling, with $\Lambda$ fixed by $\cc$ and $\bb$, predicts $\Delta_{1S}=63$--$72\MeV$ and $\Delta_{2S}=34$--$38\MeV$, in agreement with ATLAS, CMS and LHCb simultaneously.
-\item The spin-averaged $\Bc(2S)$ is predicted $11$--$24\MeV$ too high in every variant.
+\item A fixed $\alpha_s$ overpredicts the $\Bcs(1S)$ hyperfine splitting measured by ATLAS by $10$--$20\MeV$; a one-loop running coupling, with $\Lambda$ fixed by $\cc$ and $\bb$, predicts $\Delta_{1S}=63\pm15\MeV$ and $\Delta_{2S}=35\pm14\MeV$, in agreement with ATLAS, CMS and LHCb simultaneously, although it reproduces the $\cc$ and $\bb$ endpoints only at the $2\sigma$ level.
+\item A self-consistent smeared contact term with a mass-independent range is excluded by the $\bb$ hyperfine splitting; the $\bb$ system is the arbiter between hyperfine prescriptions.
+\item With a full uncertainty budget the excited $\Bc$ levels are predicted to $\pm20$--$35\MeV$, and the $1P$ and $1D$ multiplets have distinctive radiative signatures (Table~\ref{tab:pred}).
+\item The spin-averaged $\Bc(2S)$ is predicted $11$--$24\MeV$ too high in every variant, at the edge of the budget.
 \end{enumerate}
 The last point deserves comment.
 The $2S$ discrepancy survives changes of confining potential, of $\alpha_s$ treatment and of theory floor, and is several times the propagated uncertainty.
@@ -359,7 +470,7 @@ An AI assistant (Claude, Anthropic) was used to refactor the thesis code into th
 \end{acknowledgments}
 
 \section*{Code and data availability}
-The complete code, the fitted parameter sets and the scripts that regenerate every table and figure in this paper are available at \url{https://github.com/apoppong24/bc-quarkonium}; the experimental inputs are listed in Table~\ref{tab:data}.
+The complete code, the fitted parameter sets and the scripts that regenerate every table and figure in this paper are available at \url{https://github.com/apoppong24/bc-spectrum-paper}; the experimental inputs are listed in Table~\ref{tab:data}.
 
 \bibliographystyle{unsrtnat}
 \bibliography{refs}

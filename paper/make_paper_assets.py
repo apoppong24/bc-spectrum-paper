@@ -105,12 +105,51 @@ keep = [r for r in rad if r["width_keV"] >= 10 and r["type"] == "E1"] + [r for r
 lines = [f"{tex_state(r['initial'])} $\\to$ {tex_state(r['final'])}$\\,\\gamma$ & {r['type']} & {r['k_MeV']:.0f} & {r['width_keV']:.1f} \\\\" for r in keep]
 (OUT / "tables/radiative.tex").write_text("\n".join(lines) + "\n\\bottomrule\n")
 
+# ---------------------------------------------------------------- Table: uncertainty budget
+bud = json.loads((RES / "uncertainty_budget.json").read_text())
+b = bud["budget"]["martin_run_geometric"]
+srcs = [k for k in b if not k.startswith("_")]
+lines = []
+for lab in ["11S0", "13S1", "21S0", "23S1", "13P0", "1P1", "1P1'", "13P2", "13D1", "13D3", "33S1", "d1S", "d2S"]:
+    name = tex_state(lab) if lab[0].isdigit() else {"d1S": r"$\Delta_{1S}$", "d2S": r"$\Delta_{2S}$"}[lab]
+    lines.append(f"{name} & {b['_central'][lab]:.0f} & " + " & ".join(f"{b[k][lab]:.0f}" for k in srcs) + f" & {b['_total'][lab]:.0f} \\\\")
+(OUT / "tables/budget.tex").write_text("\n".join(lines) + "\n\\bottomrule\n")
+(OUT / "tables/budget_header.tex").write_text(" & ".join({"floor": "floor", "data": "data set", "scale": r"$\alpha_s$ scale", "model": "model", "fit": "fit"}[k] for k in srcs) + "\n")
+
+# ---------------------------------------------------------------- Table: self-consistent (excluded)
+lines = []
+NAMES = {"martin_sc": "Martin, fixed", "log_sc": "Log, fixed", "martin_run_geometric_sc": "Martin, running",
+         "log_run_geometric_sc": "Log, running", "martin_run_geometric_sc_s0.8": r"Martin, running, $\sigma=0.8$",
+         "martin_run_geometric_sc_s1.2": r"Martin, running, $\sigma=1.2$"}
+for k, v in bud["selfconsistent"].items():
+    lines.append(f"{NAMES[k]} & {v['chi2']:.0f}/{v['dof']} & {v['m_c']:.2f} & {v['cc_d1S']:.0f} & {v['bb_d1S']:.0f} & {v['d1S']:.0f} & {v['d2S']:.0f} \\\\")
+(OUT / "tables/selfconsistent.tex").write_text("\n".join(lines) + "\n\\bottomrule\n")
+
+# ---------------------------------------------------------------- Table: experimental predictions
+ex = json.loads((RES / "experimental_predictions.json").read_text())
+lines = []
+for lab in ["13P0", "1P1", "1P1'", "13P2", "21S0", "23S1", "13D1", "1D2", "1D2'", "13D3", "23P0", "2P1", "2P1'", "23P2", "31S0", "33S1"]:
+    st = ex["states"][lab]
+    tot = b["_total"].get(lab, None)
+    err = f"{tot:.0f}" if tot else f"{np.hypot(st['fit_err'], st['model_err']):.0f}"
+    ln = "; ".join(f"{tex_state(r['final'])} ({r['k_MeV']:.0f}, {r['width_keV']:.0f}, {100*r['BR_rad']:.0f}\\%)" for r in st["lines"][:3] if r["width_keV"] >= 1) or "--"
+    lines.append(f"{tex_state(lab)} & ${st['mass']:.0f}\\pm{err}$ & {st['v2_c']:.2f} & {ln} \\\\")
+(OUT / "tables/predictions.tex").write_text("\n".join(lines) + "\n\\bottomrule\n")
+
+# ---------------------------------------------------------------- Table: decay constants + v2
+lines = []
+for pair, name, lat in (("cc", r"$\eta_c$", "395(2)"), ("bb", r"$\eta_b$", "667(6)"), ("cb", r"$B_c$", "427(6)")):
+    lines.append(f"{name} & {ex['decay_constants'][pair]:.0f} & {lat} \\\\")
+(OUT / "tables/decay_constants.tex").write_text("\n".join(lines) + "\n\\bottomrule\n")
+
 # ---------------------------------------------------------------- Figures
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-plt.rcParams.update({"font.size": 9, "axes.labelsize": 9, "legend.fontsize": 7.5})
+plt.rcParams.update({"font.size": 9, "axes.labelsize": 9, "legend.fontsize": 7.5,
+                     "font.family": "serif", "mathtext.fontset": "cm", "axes.linewidth": 0.6,
+                     "xtick.direction": "in", "ytick.direction": "in", "pdf.fonttype": 42})
 
 # Fig 1: residuals
 fig, ax = plt.subplots(figsize=(7.0, 3.2))

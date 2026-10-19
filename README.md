@@ -1,3 +1,29 @@
+# B_c spectrum from charmonium and bottomonium — paper repository
+
+**P. A. Oppong, "How well do charmonium and bottomonium determine the B_c
+spectrum? A potential-model test with the B_c(2S) hyperfine difference"**
+(manuscript in `paper/`, draft PDF built from `paper/main.tex`).
+
+This repository is the publication version of the code; it continues the
+history of https://github.com/apoppong24/bc-quarkonium (the thesis refactor)
+and adds the self-consistent hyperfine test, the uncertainty budget, ⟨v²⟩,
+decay constants and the experimental-prediction tables. The original MSc
+thesis and notebooks are archived at
+https://github.com/apoppong24/bc-meson-msc-thesis.
+
+Reproduce everything (≈1 h on one core, or ≈2 min using the shipped fits):
+
+```bash
+pip install -r requirements.txt
+python bc_paper_results.py            # spectrum, hyperfine test, α-scan, E1/M1
+python uncertainty_budget.py          # systematic budget + self-consistent test
+python experimental_predictions.py    # Table 10 and cascade signatures
+python paper/make_paper_assets.py     # LaTeX tables + figures
+cd paper && latexmk -pdf main.tex
+```
+
+---
+
 # quarkonium — Numerov solver for heavy-quark mesons and the B_c spectrum
 
 Refactored code for the MSc project **"B_c Meson Masses"** (Peter Agyemang
@@ -30,6 +56,9 @@ python refit_pdg2024.py --report    # combine fits, residual table, Bc predictio
 python scan_exponent.py 0.35        # refit V = V0 + B(r^a - 1) at fixed confining power a (~4 min each)
 python refit_pdg2024.py martin_run_geometric   # running-alpha_s variants: {martin,log}_run_{reduced,geometric}
 python bc_paper_results.py          # paper tables: spectrum + errors, hyperfine test, a-scan, E1/M1 widths
+python refit_pdg2024.py martin --floor 5      # budget variants: --floor 5|20, --exclude D|3P; families *_sc = smeared hyperfine
+python uncertainty_budget.py        # systematic budget; self-consistent-hyperfine comparison
+python experimental_predictions.py  # per-state masses, photon lines, cascades, decay constants, falsifiability
 pytest                                   # ~25 s
 ```
 

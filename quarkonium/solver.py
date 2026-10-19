@@ -73,12 +73,48 @@ class RadialState:
     def label(self) -> str:
         return f"{self.n}{'SPDF'[self.l]}"
 
+    # ----- relativistic size and decay constant ----------------------------
+    def mean_p2(self) -> float:
+        """<p²> in GeV² from the virial-free identity <p²>/2μ = E − <V_eff>."""
+        veff = getattr(self, "_veff", None)
+        if veff is None:
+            veff = _effective_potential(self.potential, self.r, self.l, self.mu)
+        mean_V = float(np.sum(self.u[1:] ** 2 * veff[1:]) * self.h)
+        return 2.0 * self.mu * (self.E - mean_V)
 
-def _effective_potential(V: Potential, r: np.ndarray, l: int, mu: float) -> np.ndarray:
+    def v2(self) -> tuple[float, float]:
+        """(<v₁²>, <v₂²>) = <p²>/m_i², the non-relativistic expansion parameters."""
+        p2 = self.mean_p2()
+        return p2 / self.m1**2, p2 / self.m2**2
+
+    def decay_constant(self, alpha_s: float | None = None, qcd_correction: bool = True) -> float:
+        """Pseudoscalar/vector decay constant from van Royen–Weisskopf,
+            f² = 3|R(0)|²/(π M) · C,
+        with the one-loop correction C = 1 − (α_s/π)[2 − (m₁−m₂)/(m₁+m₂) ln(m₁/m₂)]
+        (Braaten & Fleming 1995; reduces to 1 − 16α_s/(3π)·… for equal masses
+        only in the vector case—here we use the pseudoscalar/vector-averaged
+        form appropriate to the spin-averaged wavefunction).  S waves only."""
+        if self.l != 0:
+            raise ValueError("decay constant needs an S-wave state")
+        M = self.mass
+        f2 = 3.0 * self.R_at_origin_sq() / (np.pi * M)
+        if qcd_correction:
+            a = self.potential.alpha_s_for(self.m1, self.m2) if alpha_s is None else alpha_s
+            m1, m2 = max(self.m1, self.m2), min(self.m1, self.m2)
+            C = 1.0 - (a / np.pi) * (2.0 - (m1 - m2) / (m1 + m2) * np.log(m1 / m2))
+            f2 *= C
+        return float(np.sqrt(max(f2, 0.0)))
+
+
+def _effective_potential(V: Potential, r: np.ndarray, l: int, mu: float, extra_V=None) -> np.ndarray:
     """V_eff on the grid (thesis eq. 24).  r[0] = 0 is never used because
-    U[0] = 0 multiplies it, so we silence the singularity there."""
+    U[0] = 0 multiplies it, so we silence the singularity there.
+    `extra_V(r)` is an optional additional term (e.g. a smeared spin-spin
+    contact interaction) added to V."""
     with np.errstate(divide="ignore", invalid="ignore"):
         v = V(r) + l * (l + 1) / (2.0 * mu * r**2)
+        if extra_V is not None:
+            v = v + extra_V(r)
     v[0] = 0.0
     return v
 
@@ -101,6 +137,7 @@ def solve(
     E_bracket: tuple[float, float] | None = None,
     tol: float = 1e-10,
     max_iter: int = 200,
+    extra_V=None,
 ) -> RadialState:
     """Find the bound state with n-1 radial nodes and angular momentum l.
 
@@ -113,13 +150,15 @@ def solve(
                 classically forbidden region of the state wanted
     h         : grid spacing in GeV^-1
     E_bracket : optional (E_low, E_high); default spans the potential well
+    extra_V   : optional callable r -> V_extra(r) added to the potential
+                (used for the self-consistent smeared hyperfine term)
     """
     if n < 1 or l < 0:
         raise ValueError("need n >= 1 and l >= 0")
     n_r = n - 1
     mu = reduced_mass(m1, m2)
     r = np.arange(0.0, r_max + 0.5 * h, h)
-    veff = _effective_potential(potential, r, l, mu)
+    veff = _effective_potential(potential, r, l, mu, extra_V)
 
     if E_bracket is None:
         E_lo = float(np.min(veff[1:]))
@@ -157,7 +196,9 @@ def solve(
     u[tail:] = 0.0
     norm = np.sqrt(np.sum(u * u) * h)            # thesis eq. (26), as in the notebooks
     u /= norm
-    return RadialState(potential, m1, m2, n, l, E, r, u, h)
+    st = RadialState(potential, m1, m2, n, l, E, r, u, h)
+    st._veff = veff
+    return st
 
 
 def _tail_cut(u: np.ndarray, r: np.ndarray, veff: np.ndarray, E: float) -> int:

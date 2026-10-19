@@ -63,22 +63,36 @@ def _parse(label):
     return n, (s2 - 1) // 2, L, J
 
 
-def dataset(sigma_th=10.0):
+def dataset(sigma_th=10.0, exclude=()):
+    """Rows (pair, label, mass GeV, sigma GeV).  `exclude` is a list of
+    substrings; a level whose label contains any of them is dropped
+    (e.g. ["D"] removes the D waves, ["3P"] the 3P levels)."""
     rows = []
     for pair, table in (("cc", pdg2024.CHARMONIUM), ("bb", pdg2024.BOTTOMONIUM)):
         for lab, (m, s) in table.items():
+            if any(x in lab for x in exclude):
+                continue
             rows.append((pair, lab, m / 1000.0, np.hypot(s, sigma_th) / 1000.0))
     return rows
 
 
 # ---------------------------------------------------------------- model
 def predict(P: Potential, pair: str, labels, h=2e-3):
-    """Masses (GeV) for the requested J-resolved labels of one flavour pair."""
+    """Masses (GeV) for the requested J-resolved labels of one flavour pair.
+
+    With P.hyperfine == "smeared" the S-wave singlet and triplet are obtained
+    by solving the radial equation with the smeared contact term included
+    (self-consistently), instead of adding the first-order T3 shift."""
     q = {"cc": ("c", "c"), "bb": ("b", "b"), "cb": ("c", "b")}[pair]
     m1, m2 = P.mass(q[0]), P.mass(q[1])
     need = sorted({(_parse(l)[0], _parse(l)[2]) for l in labels})
     out = {}
     for n, L in need:
+        if L == 0 and P.hyperfine == "smeared":
+            for S, ss, lab in ((1, 0.25, f"{n}3S1"), (0, -0.75, f"{n}1S0")):
+                st = solve(P, m1, m2, n, 0, r_max=R_MAX[0][n], h=h, extra_V=P.contact_term(m1, m2, ss))
+                out[lab] = st.mass
+            continue
         st = solve(P, m1, m2, n, L, r_max=R_MAX[L][n], h=h)
         for f in fine_structure(st):
             out[f.label] = f.mass
@@ -110,9 +124,9 @@ class FitResult:
         return "\n".join(lines)
 
 
-def fit(family: str, sigma_th=10.0, h=2e-3, verbose=True) -> FitResult:
+def fit(family: str, sigma_th=10.0, h=2e-3, verbose=True, exclude=()) -> FitResult:
     spec = FAMILIES[family]
-    data = dataset(sigma_th)
+    data = dataset(sigma_th, exclude)
     by_pair = {}
     for pair, lab, m, s in data:
         by_pair.setdefault(pair, []).append((lab, m, s))
@@ -176,6 +190,25 @@ for _scale in ("reduced", "geometric"):
         make=(lambda *x, _s=_scale: make_log_running(*x, scale=_s)),
         names=["C", "m_c", "m_b", "Lambda"], x0=[0.737, 1.51, 4.91, 0.35],
         bounds=([0.3, 1.0, 4.0, 0.05], [1.5, 2.5, 6.0, 0.9]))
+
+
+# ---------------------------------------------------------------- self-consistent hyperfine
+def _sc(make):
+    """Wrap a family's `make` so the Potential uses the smeared hyperfine."""
+    import dataclasses
+
+    def make_sc(*x, _sigma=1.0, **kw):
+        return dataclasses.replace(make(*x, **kw), hyperfine="smeared", smear_sigma=_sigma)
+    return make_sc
+
+
+for _base in ("martin", "log", "martin_run_geometric", "log_run_geometric"):
+    FAMILIES[_base + "_sc"] = dict(FAMILIES[_base], make=_sc(FAMILIES[_base]["make"]))
+for _sig in (0.8, 1.2):
+    _m = FAMILIES["martin_run_geometric"]["make"]
+    FAMILIES[f"martin_run_geometric_sc_s{_sig:g}"] = dict(
+        FAMILIES["martin_run_geometric"],
+        make=(lambda *x, _mm=_m, _s=_sig: _sc(_mm)(*x, _sigma=_s)))
 
 
 # ---------------------------------------------------------------- exponent scan

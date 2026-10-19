@@ -15,13 +15,14 @@ import numpy as np
 OUT = Path(__file__).parent / "results"
 
 
-def run_fit(family):
+def run_fit(family, sigma_th=10.0, exclude=(), tag=""):
     from quarkonium.fit import fit
-    r = fit(family, verbose=True)
+    r = fit(family, sigma_th=sigma_th, verbose=True, exclude=exclude)
     print(r.summary())
     OUT.mkdir(exist_ok=True)
-    (OUT / f"fit_{family}.json").write_text(json.dumps({
-        "family": family, "names": r.names, "x": r.x.tolist(), "errors": r.errors.tolist(),
+    (OUT / f"fit_{family}{tag}.json").write_text(json.dumps({
+        "family": family, "tag": tag, "sigma_th": sigma_th, "exclude": list(exclude),
+        "names": r.names, "x": r.x.tolist(), "errors": r.errors.tolist(),
         "cov": None if r.cov is None else r.cov.tolist(),
         "chi2": r.chi2, "dof": r.dof, "seconds": r.seconds,
         "residuals": [{"pair": p, "label": l, "exp": e, "model": m, "pull": q} for p, l, e, m, q in r.residuals],
@@ -93,7 +94,19 @@ def report():
 
 
 if __name__ == "__main__":
-    if sys.argv[1] == "--report":
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("family", nargs="?")
+    ap.add_argument("--report", action="store_true")
+    ap.add_argument("--floor", type=float, default=10.0, help="theory floor in MeV")
+    ap.add_argument("--exclude", nargs="*", default=[], help="drop levels whose label contains these (e.g. D 3P)")
+    a = ap.parse_args()
+    if a.report:
         report()
     else:
-        run_fit(sys.argv[1])
+        tag = ""
+        if a.floor != 10.0:
+            tag += f"__floor{a.floor:g}"
+        if a.exclude:
+            tag += "__no" + "".join(a.exclude)
+        run_fit(a.family, sigma_th=a.floor, exclude=tuple(a.exclude), tag=tag)

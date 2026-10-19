@@ -31,6 +31,11 @@ class Potential:
     # (mu = sqrt(m1 m2)); lambda_qcd in GeV, n_f = 4.
     alpha_s_scale: str | None = None
     lambda_qcd: float = 0.3
+    # Hyperfine treatment for S waves: "perturbative" (first-order, E&Q) or
+    # "smeared" (a Gaussian-smeared contact term added to the Hamiltonian and
+    # solved self-consistently, as in Barnes–Godfrey–Swanson 2005).
+    hyperfine: str = "perturbative"
+    smear_sigma: float = 1.0          # GeV; width of the smeared delta function
 
     def __call__(self, r: Array) -> Array:
         return self.V(r)
@@ -44,6 +49,14 @@ class Potential:
             return self.alpha_s
         mu = 2.0 * m1 * m2 / (m1 + m2) if self.alpha_s_scale == "reduced" else np.sqrt(m1 * m2)
         return 12.0 * np.pi / (25.0 * np.log(mu**2 / self.lambda_qcd**2))      # n_f = 4
+
+    def contact_term(self, m1: float, m2: float, spin_spin: float):
+        """Smeared hyperfine potential  V_hf(r) = (32π α_s / 9 m1 m2) <s1·s2> δ_σ(r),
+        δ_σ(r) = (σ/√π)³ exp(−σ² r²), for use as `extra_V` in the solver."""
+        a = self.alpha_s_for(m1, m2)
+        pref = 32.0 * np.pi * a / (9.0 * m1 * m2) * spin_spin * (self.smear_sigma / np.sqrt(np.pi)) ** 3
+        sig2 = self.smear_sigma**2
+        return lambda r: pref * np.exp(-sig2 * r**2)
 
 
 def _cornell(r: Array, kappa: float = 0.52, a: float = 2.34) -> Array:
