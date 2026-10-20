@@ -127,7 +127,7 @@ def main():
         mc = d["x"][d["names"].index("m_c")]
         sc[name] = {"chi2": d["chi2"], "dof": d["dof"], "coupling": d["x"][-1], "m_c": mc, "cc_d1S": cc1, "bb_d1S": bb1, **h, "bcstar": p["13S1"]}
         md.append(f"| {name} | {d['chi2']:.1f}/{d['dof']} | {d['x'][-1]:.3f} | {mc:.2f} | {cc1:.0f} | {bb1:.0f} | {h['d1S']:.1f} | {h['d2S']:.1f} | {h['d1S']-h['d2S']:.1f} | {p['13S1']:.0f} |")
-    md.append("| experiment | | | | 112.8 | 61.7 | 64.5 ± 1.7 | 35.4 ± 2.4 | 29.1 ± 1.7 | 6339.0 ± 1.7 |")
+    md.append("| experiment | | | | 112.8 | 61.7 | 64.5 ± 1.8 | 35.4 ± 2.5 | 29.1 ± 1.7 | 6339.0 ± 1.8 |")
     # perturbative fits' cc/bb hyperfine for comparison
     md.append("\nFor reference, the perturbative fits give (cc̄ Δ(1S), bb̄ Δ(1S)): " + "; ".join(
         f"{f}: ({1000*(rr2[('cc','13S1')]-rr2[('cc','11S0')]):.0f}, {1000*(rr2[('bb','13S1')]-rr2[('bb','11S0')]):.0f})"

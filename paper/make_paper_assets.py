@@ -184,7 +184,7 @@ for key, name, c in (("11S0", "$B_c(1S)$", "C0"), ("13S1", "$B_c^*(1S)$", "C1"),
     axes[0].errorbar(a, [s[key] for s in scan], yerr=[s["err"][key] for s in scan], fmt="o-", ms=3, capsize=2, color=c, label=name)
 axes[0].axhline(pdg.BC["11S0"][0], color="C0", ls=":", lw=1)
 axes[0].axhline(pdg.BC["21S0"][0], color="C2", ls=":", lw=1)
-axes[0].axhspan(6339.0 - 1.7, 6339.0 + 1.7, color="C1", alpha=0.35)
+axes[0].axhspan(6339.0 - 1.8, 6339.0 + 1.8, color="C1", alpha=0.35)
 axes[0].set_xlabel(r"$\alpha$"); axes[0].set_ylabel("mass [MeV]"); axes[0].legend(ncol=2)
 for key, name in (("P1", "1P centroid"), ("D1", "1D centroid"), ("33S1", r"$3\,^3S_1$")):
     axes[1].plot(a, [s[key] for s in scan], "o-", ms=3, label=name)
@@ -205,7 +205,7 @@ fig.tight_layout(); fig.savefig(OUT / "figures/fig4_hyperfine.pdf"); plt.close(f
 # Fig 5: absolute 1S hyperfine vs ATLAS and lattice
 fig, ax = plt.subplots(figsize=(3.4, 2.8))
 ax.plot(range(len(fams)), [hyp[f]["d1S"] for f in fams], "o", mfc="none", color="C0", label=r"$\Delta_{1S}$")
-ax.axhspan(64.5 - 1.7, 64.5 + 1.7, color="C1", alpha=0.35, label="ATLAS 2026")
+ax.axhspan(64.5 - 1.8, 64.5 + 1.8, color="C1", alpha=0.35, label="ATLAS 2026")
 ax.axhspan(54 - 3, 54 + 3, color="C2", alpha=0.3, label="HPQCD 2012")
 ax.set_xticks(range(len(fams))); ax.set_xticklabels(short, rotation=60, fontsize=6.5)
 ax.set_ylabel("[MeV]"); ax.legend(loc="upper right")
