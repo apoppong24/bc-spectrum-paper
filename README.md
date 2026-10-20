@@ -51,12 +51,12 @@ https://github.com/apoppong24/bc-meson-msc-thesis.
 pip install numpy matplotlib pytest      # numpy is the only hard dependency
 python reproduce_thesis.py --plots       # tables -> results/, Figs. 3, 8, 9, 10-12 -> results/*.png
 python fine_structure_tables.py --potential martin   # J-resolved cc, bb, Bc spectra through 4S/3P/2D
-python refit_pdg2024.py martin      # refit one family to PDG 2026 (~4 min; also: log, cornell)
-python refit_pdg2024.py --report    # combine fits, residual table, Bc predictions with model spread
+python refit_pdg.py martin      # refit one family to PDG 2026 (~4 min; also: log, cornell)
+python refit_pdg.py --report    # combine fits, residual table, Bc predictions with model spread
 python scan_exponent.py 0.35        # refit V = V0 + B(r^a - 1) at fixed confining power a (~4 min each)
-python refit_pdg2024.py martin_run_geometric   # running-alpha_s variants: {martin,log}_run_{reduced,geometric}
+python refit_pdg.py martin_run_geometric   # running-alpha_s variants: {martin,log}_run_{reduced,geometric}
 python bc_paper_results.py          # paper tables: spectrum + errors, hyperfine test, a-scan, E1/M1 widths
-python refit_pdg2024.py martin --floor 5      # budget variants: --floor 5|20, --exclude D|3P; families *_sc = smeared hyperfine
+python refit_pdg.py martin --floor 5      # budget variants: --floor 5|20, --exclude D|3P; families *_sc = smeared hyperfine
 python uncertainty_budget.py        # systematic budget; self-consistent-hyperfine comparison
 python experimental_predictions.py  # per-state masses, photon lines, cascades, decay constants, falsifiability
 pytest                                   # ~25 s
@@ -104,13 +104,13 @@ quarkonium/
   spectrum.py     solve the 1S 2S 3S 1P 2P set for a flavour pair
   plots.py        Figs. 3 (potentials), 8 (shooting), 9 (wavefunctions), 10-12 (splittings)
   spin_dependent.py  first-order spin-dependent shifts, E&Q 1994 eqs. (2.15)-(2.25)
-  pdg2024.py      PDG 2026 cc̄ / bb̄ / B_c masses used in the refit
+  pdg.py      PDG 2026 cc̄ / bb̄ / B_c masses used in the refit
   fit.py          joint least-squares refit of (potential params, m_c, m_b, α_s); fixed-exponent families
   uncertainty.py  propagate fit covariance to predicted masses
   radiative.py    E1/M1 widths (E&Q 1994 §III), Wigner 6-j statistical factors
 reproduce_thesis.py   regenerate Tables 2–15 and Figs. 3, 8, 9, 10–12
 fine_structure_tables.py  J-resolved spectra (1S-4S, 1P-3P, 1D-2D) vs PDG and E&Q Table C
-refit_pdg2024.py      refit to PDG 2026 and predict B_c; writes results/refit_pdg2024.md
+refit_pdg.py      refit to PDG 2026 and predict B_c; writes results/refit_pdg.md
 scan_exponent.py      refit at fixed confining power α
 bc_paper_results.py   assemble paper-level results -> results/paper_results.md, fig_band_exponent.png, fig_hyperfine_test.png
 tests/                regression tests vs. thesis values
@@ -158,10 +158,10 @@ B_c mixing matrix, and B_c 1P levels within 20–40 MeV of E&Q Table C.
 
 ## Refit to PDG 2026
 
-`refit_pdg2024.py` refits each family (potential parameters, m_c, m_b, α_s)
+`refit_pdg.py` refits each family (potential parameters, m_c, m_b, α_s)
 jointly to 27 J-resolved charmonium and bottomonium levels from PDG 2026
-(`quarkonium/pdg2024.py`), with a 10 MeV theory floor added in quadrature.
-Results are in `results/refit_pdg2024.md` / `fit_<family>.json`, and
+(`quarkonium/pdg.py`), with a 10 MeV theory floor added in quadrature.
+Results are in `results/refit_pdg.md` / `fit_<family>.json`, and
 `quarkonium.fit.load_fit("martin")` returns the refitted `Potential`.
 
 Headline: with refitted parameters the three families predict

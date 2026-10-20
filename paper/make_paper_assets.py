@@ -19,7 +19,7 @@ OUT = ROOT / "paper"
 (OUT / "tables").mkdir(parents=True, exist_ok=True)
 (OUT / "figures").mkdir(parents=True, exist_ok=True)
 
-from quarkonium import pdg2024  # noqa: E402
+from quarkonium import pdg  # noqa: E402
 
 fits = {p.stem[4:]: json.loads(p.read_text()) for p in RES.glob("fit_*.json")}
 paper = json.loads((RES / "paper_results.json").read_text())
@@ -39,7 +39,7 @@ def tex_state(lab: str) -> str:
 
 # ---------------------------------------------------------------- Table: data set
 rows = []
-for pair, table, name in (("cc", pdg2024.CHARMONIUM, r"$c\bar c$"), ("bb", pdg2024.BOTTOMONIUM, r"$b\bar b$")):
+for pair, table, name in (("cc", pdg.CHARMONIUM, r"$c\bar c$"), ("bb", pdg.BOTTOMONIUM, r"$b\bar b$")):
     for lab, (m, s) in table.items():
         rows.append(f"{name} & {tex_state(lab)} & ${m:.1f} \\pm {s:.1f}$ \\\\")
 (OUT / "tables/dataset.tex").write_text("\n".join(rows) + "\n\\bottomrule\n")
@@ -73,7 +73,7 @@ lines = []
 for lab in order:
     s = spec[lab]
     cells = [f"${s[f]:.0f}({s['param_err'][f]:.0f})$" for f in MAIN]
-    pdg = pdg2024.BC.get(lab)
+    pdg = pdg.BC.get(lab)
     lines.append(f"{tex_state(lab)} & " + " & ".join(cells)
                  + f" & ${s['mean']:.0f} \\pm {s['spread']:.0f}$ & {EQ94.get(lab, '--')} & "
                  + (f"${pdg[0]:.1f} \\pm {pdg[1]}$" if pdg else "--") + r" \\")
@@ -182,8 +182,8 @@ fig.tight_layout(); fig.savefig(OUT / "figures/fig2_chi2_alpha.pdf"); plt.close(
 fig, axes = plt.subplots(1, 2, figsize=(7.0, 2.9))
 for key, name, c in (("11S0", "$B_c(1S)$", "C0"), ("13S1", "$B_c^*(1S)$", "C1"), ("21S0", "$B_c(2S)$", "C2"), ("23S1", "$B_c^*(2S)$", "C3")):
     axes[0].errorbar(a, [s[key] for s in scan], yerr=[s["err"][key] for s in scan], fmt="o-", ms=3, capsize=2, color=c, label=name)
-axes[0].axhline(pdg2024.BC["11S0"][0], color="C0", ls=":", lw=1)
-axes[0].axhline(pdg2024.BC["21S0"][0], color="C2", ls=":", lw=1)
+axes[0].axhline(pdg.BC["11S0"][0], color="C0", ls=":", lw=1)
+axes[0].axhline(pdg.BC["21S0"][0], color="C2", ls=":", lw=1)
 axes[0].axhspan(6339.0 - 1.7, 6339.0 + 1.7, color="C1", alpha=0.35)
 axes[0].set_xlabel(r"$\alpha$"); axes[0].set_ylabel("mass [MeV]"); axes[0].legend(ncol=2)
 for key, name in (("P1", "1P centroid"), ("D1", "1D centroid"), ("33S1", r"$3\,^3S_1$")):

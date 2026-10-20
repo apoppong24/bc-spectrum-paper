@@ -21,7 +21,7 @@ from pathlib import Path
 
 import numpy as np
 
-from quarkonium import pdg2024
+from quarkonium import pdg
 from quarkonium.fit import FAMILIES, predict
 from quarkonium.radiative import radiative_table
 from quarkonium.solver import solve
@@ -33,7 +33,7 @@ LEVELS = [("1S", 1, 0), ("2S", 2, 0), ("3S", 3, 0), ("1P", 1, 1), ("2P", 2, 1), 
 R_MAX = {"1S": 14, "2S": 14, "3S": 18, "1P": 14, "2P": 18, "1D": 18}
 LAB = ["11S0", "13S1", "13P0", "1P1", "1P1'", "13P2", "21S0", "23S1",
        "13D1", "1D2", "1D2'", "13D3", "23P0", "2P1", "2P1'", "23P2", "31S0", "33S1"]
-LATTICE_F = {"cc": ("f_ηc", *pdg2024.LATTICE_F["cc"]), "bb": ("f_ηb", *pdg2024.LATTICE_F["bb"]), "cb": ("f_Bc", *pdg2024.LATTICE_F["cb"])}   # HPQCD, MeV
+LATTICE_F = {"cc": ("f_ηc", *pdg.LATTICE_F["cc"]), "bb": ("f_ηb", *pdg.LATTICE_F["bb"]), "cb": ("f_Bc", *pdg.LATTICE_F["cb"])}   # HPQCD, MeV
 
 
 def tex(lab):
@@ -122,9 +122,9 @@ def main():
     # ---- 4. hyperfine summary for the record
     d1 = 1000 * (central["13S1"][0] - central["11S0"][0]); d2 = 1000 * (central["23S1"][0] - central["21S0"][0])
     md.append("## 4. Hyperfine sector\n")
-    md.append(f"Δ(1S) = {d1:.1f} MeV (ATLAS {pdg2024.ATLAS_HYP_1S[0]} ± {pdg2024.ATLAS_HYP_1S[1]}); "
+    md.append(f"Δ(1S) = {d1:.1f} MeV (ATLAS {pdg.ATLAS_HYP_1S[0]} ± {pdg.ATLAS_HYP_1S[1]}); "
               f"Δ(2S) = {d2:.1f} MeV (ATLAS+CMS 35.4 ± 2.4); Δ(1S)−Δ(2S) = {d1-d2:.1f} MeV "
-              f"(CMS {pdg2024.CMS_HYP_DIFF[0]} ± {pdg2024.CMS_HYP_DIFF[1]}, LHCb {pdg2024.LHCB_HYP_DIFF}).\n")
+              f"(CMS {pdg.CMS_HYP_DIFF[0]} ± {pdg.CMS_HYP_DIFF[1]}, LHCb {pdg.LHCB_HYP_DIFF}).\n")
 
     # ---- 5. falsifiability
     p1 = [1000 * others[f]["13P0"] for f in fits]; p2 = [1000 * others[f]["13P2"] for f in fits]

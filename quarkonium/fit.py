@@ -19,7 +19,7 @@ from dataclasses import dataclass, field
 import numpy as np
 from scipy.optimize import least_squares
 
-from . import pdg2024
+from . import pdg
 from .potentials import Potential
 from .solver import solve
 from .spin_dependent import fine_structure
@@ -68,7 +68,7 @@ def dataset(sigma_th=10.0, exclude=()):
     substrings; a level whose label contains any of them is dropped
     (e.g. ["D"] removes the D waves, ["3P"] the 3P levels)."""
     rows = []
-    for pair, table in (("cc", pdg2024.CHARMONIUM), ("bb", pdg2024.BOTTOMONIUM)):
+    for pair, table in (("cc", pdg.CHARMONIUM), ("bb", pdg.BOTTOMONIUM)):
         for lab, (m, s) in table.items():
             if any(x in lab for x in exclude):
                 continue

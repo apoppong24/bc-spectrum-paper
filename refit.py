@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Refit one potential family to PDG 2026 and save results/fit_<family>.json.
 
-    python refit_pdg2024.py martin      # also: log, cornell
-    python refit_pdg2024.py --report    # combine the three fits, predict B_c
+    python refit_pdg.py martin      # also: log, cornell
+    python refit_pdg.py --report    # combine the three fits, predict B_c
 """
 from __future__ import annotations
 
@@ -30,7 +30,7 @@ def run_fit(family, sigma_th=10.0, exclude=(), tag=""):
 
 
 def report():
-    from quarkonium import pdg2024
+    from quarkonium import pdg
     from quarkonium.fit import FAMILIES, predict
     from quarkonium.potentials import CORNELL, LOGARITHMIC, MARTIN
 
@@ -83,12 +83,12 @@ def report():
     bc_out = {}
     for lab in bc_labels:
         v = np.array([preds[f][lab] for f in fits]) * 1000
-        pdg = pdg2024.BC.get(lab)
+        pdg = pdg.BC.get(lab)
         bc_out[lab] = {"martin": v[0], "log": v[1], "cornell": v[2], "mean": v.mean(), "spread": (v.max() - v.min()) / 2}
         md.append(f"| {lab} | {v[0]:.1f} | {v[1]:.1f} | {v[2]:.1f} | {v.mean():.1f} ± {(v.max()-v.min())/2:.1f} | "
                   + (f"{pdg[0]:.1f} ± {pdg[1]}" if pdg else "-") + " |")
     text = "\n".join(md)
-    (OUT / "refit_pdg2024.md").write_text(text)
+    (OUT / "refit_pdg.md").write_text(text)
     (OUT / "bc_predictions_refit.json").write_text(json.dumps(bc_out, indent=2))
     print(text)
 

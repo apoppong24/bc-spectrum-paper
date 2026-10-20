@@ -3,7 +3,7 @@ propagation with a numerical Jacobian): σ²(M) = J Σ Jᵀ.
 
 This is the *parametric* (statistical) uncertainty of a prediction given
 the fitted data; the *model* uncertainty is the spread across potential
-families (see refit_pdg2024.py / scan_exponent.py)."""
+families (see refit_pdg.py / scan_exponent.py)."""
 from __future__ import annotations
 
 import numpy as np

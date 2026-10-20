@@ -19,7 +19,7 @@ from pathlib import Path
 
 import numpy as np
 
-from quarkonium import pdg2024
+from quarkonium import pdg
 from quarkonium.fit import FAMILIES, register_power_family
 from quarkonium.radiative import radiative_table
 from quarkonium.spectrum import spectrum
@@ -70,7 +70,7 @@ def main():
         vals = [1000 * res[f][lab][0] for f in main_fams]
         errs = [1000 * res[f][lab][1] for f in main_fams]
         spread = (max(vals) - min(vals)) / 2
-        pdg = pdg2024.BC.get(lab)
+        pdg = pdg.BC.get(lab)
         table[lab] = dict(zip(main_fams, vals)) | {"mean": float(np.mean(vals)), "spread": spread,
                                                    "param_err": dict(zip(main_fams, errs))}
         md.append(f"| {lab} | " + " | ".join(f"{v:.0f} ± {e:.0f}" for v, e in zip(vals, errs))
@@ -148,8 +148,8 @@ def main():
         a = [s["alpha"] for s in scan]
         for key, name in (("11S0", "B_c(1S)"), ("13S1", "B_c*(1S)"), ("21S0", "B_c(2S)"), ("23S1", "B_c*(2S)")):
             axes[0].errorbar(a, [s[key] for s in scan], yerr=[s["err"][key] for s in scan], fmt="o-", capsize=3, label=name)
-        axes[0].axhline(pdg2024.BC["11S0"][0], color="C0", ls="--", lw=1)
-        axes[0].axhline(pdg2024.BC["21S0"][0], color="C2", ls="--", lw=1)
+        axes[0].axhline(pdg.BC["11S0"][0], color="C0", ls="--", lw=1)
+        axes[0].axhline(pdg.BC["21S0"][0], color="C2", ls="--", lw=1)
         axes[0].axhspan(LATTICE_BCSTAR - LATTICE_ERR, LATTICE_BCSTAR + LATTICE_ERR, color="C1", alpha=0.2, label="lattice B_c*")
         axes[0].set_xlabel("confining power α  (0 = log)"); axes[0].set_ylabel("mass [MeV]"); axes[0].legend(fontsize=8)
         axes[0].set_title("S-wave B_c vs potential shape (dashed: PDG)")
