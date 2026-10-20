@@ -33,7 +33,7 @@ LEVELS = [("1S", 1, 0), ("2S", 2, 0), ("3S", 3, 0), ("1P", 1, 1), ("2P", 2, 1), 
 R_MAX = {"1S": 14, "2S": 14, "3S": 18, "1P": 14, "2P": 18, "1D": 18}
 LAB = ["11S0", "13S1", "13P0", "1P1", "1P1'", "13P2", "21S0", "23S1",
        "13D1", "1D2", "1D2'", "13D3", "23P0", "2P1", "2P1'", "23P2", "31S0", "33S1"]
-LATTICE_F = {"cc": ("f_ηc", 395.0, 2.0), "bb": ("f_ηb", 667.0, 6.0), "cb": ("f_Bc", 427.0, 6.0)}   # HPQCD, MeV
+LATTICE_F = {"cc": ("f_ηc", *pdg2024.LATTICE_F["cc"]), "bb": ("f_ηb", *pdg2024.LATTICE_F["bb"]), "cb": ("f_Bc", *pdg2024.LATTICE_F["cb"])}   # HPQCD, MeV
 
 
 def tex(lab):
@@ -116,7 +116,7 @@ def main():
         f = 1000 * st.decay_constant()
         name, lat, laterr = LATTICE_F[pair]
         fdec[pair] = f
-        md.append(f"| {name} | {f:.0f} | {lat:.0f} ± {laterr:.0f} |")
+        md.append(f"| {name} | {f:.0f} | {lat:.1f} ± {laterr:.1f} |")
     md.append("")
 
     # ---- 4. hyperfine summary for the record

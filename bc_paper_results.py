@@ -31,7 +31,8 @@ BC_LABELS = ["11S0", "13S1", "13P0", "1P1", "1P1'", "13P2", "21S0", "23S1",
              "13D1", "1D2", "1D2'", "13D3", "23P0", "2P1", "2P1'", "23P2", "31S0", "33S1"]
 CMS_DIFF, CMS_ERR = 29.1, 1.7          # MeV, CMS 1902.00571
 LHCB_DIFF = 6872.1 - 6841.2             # MeV, LHCb 1904.00081 (peak difference)
-LATTICE_BCSTAR, LATTICE_ERR = 6330.0, 9.0   # HPQCD 0909.4462
+LATTICE_BCSTAR, LATTICE_ERR = 6330.0, 9.0   # HPQCD 0909.4462 (mass)
+LATTICE_D1S, LATTICE_D1S_ERR = 54.0, 3.0     # HPQCD Dowdall et al. 2012 (hyperfine)
 
 
 def load_all():
@@ -96,7 +97,7 @@ def main():
     md.append(f"| **CMS** | | | **{CMS_DIFF} ± {CMS_ERR}** | |")
     md.append(f"| **LHCb** | | | **{LHCB_DIFF:.1f}** | |")
     md.append(f"| **ATLAS 2026** | **64.5 ± 1.7** | **35.4 ± 2.4** (with CMS) | | **6339.0 ± 1.7** |")
-    md.append(f"| **Lattice (HPQCD 2010)** | ~55 | | | **{LATTICE_BCSTAR:.0f} ± {LATTICE_ERR:.0f}** |")
+    md.append(f"| **Lattice (HPQCD 2012 / 2010)** | **{LATTICE_D1S:.0f} ± {LATTICE_D1S_ERR:.0f}** | | | **{LATTICE_BCSTAR:.0f} ± {LATTICE_ERR:.0f}** |")
     md.append("")
 
     # ---- 3. exponent scan ----------------------------------------------------

@@ -42,9 +42,9 @@ Central values: Martin potential with one-loop running α_s refitted to PDG 2026
 
 | Meson | f [MeV] | lattice (HPQCD) |
 |---|---|---|
-| f_ηc | 455 | 395 ± 2 |
-| f_ηb | 603 | 667 ± 6 |
-| f_Bc | 465 | 427 ± 6 |
+| f_ηc | 455 | 394.7 ± 2.4 |
+| f_ηb | 603 | 667.0 ± 6.0 |
+| f_Bc | 465 | 427.0 ± 6.0 |
 
 ## 4. Hyperfine sector
 

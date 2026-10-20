@@ -61,3 +61,10 @@ BC = {
 ATLAS_HYP_1S = (64.5, 1.7)      # m(B_c*+) - m(B_c+), ATLAS 2026
 CMS_HYP_DIFF = (29.1, 1.7)      # Delta_1S - Delta_2S, CMS 2019
 LHCB_HYP_DIFF = 30.9            # Delta_1S - Delta_2S, LHCb 2019 (peak difference)
+
+# Lattice QCD (HPQCD) reference values, MeV
+LATTICE_HYP_1S = (54.0, 3.0)    # M(B_c*) - M(B_c), Dowdall et al., PRD 86, 094510 (2012)
+LATTICE_BCSTAR = (6330.0, 9.0)  # M(B_c*), Gregory et al., PRL 104, 022001 (2010)
+LATTICE_F = {"cc": (394.7, 2.4),   # f_eta_c, Davies et al., PRD 82, 114504 (2010)
+             "bb": (667.0, 6.0),   # f_eta_b, McNeile et al., PRD 86, 074503 (2012)
+             "cb": (427.0, 6.0)}   # f_B_c,   McNeile et al., PRD 86, 074503 (2012)

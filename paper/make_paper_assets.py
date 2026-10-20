@@ -138,8 +138,8 @@ for lab in ["13P0", "1P1", "1P1'", "13P2", "21S0", "23S1", "13D1", "1D2", "1D2'"
 
 # ---------------------------------------------------------------- Table: decay constants + v2
 lines = []
-for pair, name, lat in (("cc", r"$\eta_c$", "395(2)"), ("bb", r"$\eta_b$", "667(6)"), ("cb", r"$B_c$", "427(6)")):
-    lines.append(f"{name} & {ex['decay_constants'][pair]:.0f} & {lat} \\\\")
+for pair, name, lat, ref in (("cc", r"$\eta_c$", "394.7(2.4)", r"\cite{Davies2010}"), ("bb", r"$\eta_b$", "667(6)", r"\cite{McNeile2012}"), ("cb", r"$B_c$", "427(6)", r"\cite{McNeile2012}")):
+    lines.append(f"{name} & {ex['decay_constants'][pair]:.0f} & {lat} {ref} \\\\")
 (OUT / "tables/decay_constants.tex").write_text("\n".join(lines) + "\n\\bottomrule\n")
 
 # ---------------------------------------------------------------- Figures
@@ -206,7 +206,7 @@ fig.tight_layout(); fig.savefig(OUT / "figures/fig4_hyperfine.pdf"); plt.close(f
 fig, ax = plt.subplots(figsize=(3.4, 2.8))
 ax.plot(range(len(fams)), [hyp[f]["d1S"] for f in fams], "o", mfc="none", color="C0", label=r"$\Delta_{1S}$")
 ax.axhspan(64.5 - 1.7, 64.5 + 1.7, color="C1", alpha=0.35, label="ATLAS 2026")
-ax.axhspan(55.5 - 9, 55.5 + 9, color="C2", alpha=0.2, label="HPQCD 2010")
+ax.axhspan(54 - 3, 54 + 3, color="C2", alpha=0.3, label="HPQCD 2012")
 ax.set_xticks(range(len(fams))); ax.set_xticklabels(short, rotation=60, fontsize=6.5)
 ax.set_ylabel("[MeV]"); ax.legend(loc="upper right")
 fig.tight_layout(); fig.savefig(OUT / "figures/fig5_hyperfine_abs.pdf"); plt.close(fig)
