@@ -1,5 +1,7 @@
 # B_c spectrum from charmonium and bottomonium — paper repository
 
+[![ORCID](https://img.shields.io/badge/ORCID-0009--0009--4678--0034-A6CE39?logo=orcid&logoColor=white)](https://orcid.org/0009-0009-4678-0034)
+
 **P. A. Oppong, "How well do charmonium and bottomonium determine the B_c
 spectrum? A potential-model test with the B_c(2S) hyperfine difference"**
 (manuscript in `paper/`, draft PDF built from `paper/main.tex`).
